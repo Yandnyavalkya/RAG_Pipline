@@ -1,0 +1,33 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code credentials/configuration
+.vscode/mcp.json
+
+# Generated data and original documents
+data/processed/
+data/raw/
+
+
+# Legacy instructor implementation (not part of the active pipeline)
+/Data_loader.py
+/Data_chunk.py
+/Model_load.py
+/Vector_db.py
+/main.py
+/test_pinecone.py

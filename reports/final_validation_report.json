@@ -1,0 +1,342 @@
+{
+    "generated_at": "2026-11-18T13:49:13.261965",
+    "configuration": {
+        "chunk_size": 500,
+        "chunk_overlap": 50,
+        "top_k": 6,
+        "similarity_threshold": 0.4,
+        "embedding_model": "all-MiniLM-L6-v2",
+        "namespace": "rag-combined-v2"
+    },
+    "summary": {
+        "total_tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "success_rate": 100.0
+    },
+    "tests": [
+        {
+            "test_name": "Transformer Architecture",
+            "question": "What is the Transformer architecture?",
+            "standalone_question": "What is the Transformer architecture?",
+            "answer": "The Transformer is a transduction model that relies entirely on self-attention to compute representations of its input and output, without using sequence-aligned RNNs or convolution [Source 5]. Its overall architecture uses stacked self-attention and point-wise, fully connected layers for both the encoder and decoder [Source 1].\n\nSpecifically, the encoder is composed of a stack of N = 6 identical layers [Source 1]. Each layer contains two sub-layers: the first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network (though the text cuts off, it identifies the second sub-layer as simple and position-based) [Source 1]. The model allows for significantly more parallelization compared to other architectures [Source 6].",
+            "expected_answerable": true,
+            "is_refusal": false,
+            "best_similarity_score": 0.613278925,
+            "retrieved_chunks": 6,
+            "accepted_chunks": 6,
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "1",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "8",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "retrieval_scores": [
+                {
+                    "vector_id": "b50429afa5e4819892abdd64f2367e7519273e6ea17b1dc94503310f39bd785b",
+                    "score": 0.613278925
+                },
+                {
+                    "vector_id": "d2a2309fa14c9b160b771f6fc6e4a747e1f0aba3cc17f8307e8d6587f63471fc",
+                    "score": 0.539760411
+                },
+                {
+                    "vector_id": "21526fa61e697db9a0a3e55fa7acfcf2fe61ed0c2001758ddbbff1e55fd972c3",
+                    "score": 0.524364471
+                },
+                {
+                    "vector_id": "dd6c899803aa4516e2a85ce61fcd5549a229d4e897eca583320a0a12bee8ee8c",
+                    "score": 0.484539926
+                },
+                {
+                    "vector_id": "590f56de8f1c18ea885a893deddd77e8e3608862db73daa6702e79ef723670af",
+                    "score": 0.464947104
+                },
+                {
+                    "vector_id": "b6ce77a5c4cd72e8f2f27c7186fc4e739d0a065f3d24c612c9c2df3e3b46bcaa",
+                    "score": 0.442446113
+                }
+            ],
+            "source_verification": true,
+            "passed": true
+        },
+        {
+            "test_name": "Multi-Head Attention",
+            "question": "What is the purpose of multi-head attention?",
+            "standalone_question": "What is the purpose of multi-head attention?",
+            "answer": "The purpose of multi-head attention is to allow the model to jointly attend to information from different representation subspaces at different positions [Source 3]. This mechanism counteracts the reduced effective resolution that occurs when attention-weighted positions are averaged, an effect that can inhibit performance in single-head attention models [Source 1] [Source 3]. By using multiple heads, the model can avoid the averaging that inhibits this joint attention capability [Source 3].",
+            "expected_answerable": true,
+            "is_refusal": false,
+            "best_similarity_score": 0.696605325,
+            "retrieved_chunks": 6,
+            "accepted_chunks": 6,
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "15",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "14",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "7",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "retrieval_scores": [
+                {
+                    "vector_id": "0397b55f32ee41fd665890e637831f7b3de1c8af573f367172a0ebd3287fa7a4",
+                    "score": 0.696605325
+                },
+                {
+                    "vector_id": "6fe1eb711f7810996065150f590eee2489a61dd38c9bc73905592d55c7dc8bba",
+                    "score": 0.623850226
+                },
+                {
+                    "vector_id": "0c23cc3e784c2e6325885fad13ba0999f2cab635da89f144752591c23ad3d9e9",
+                    "score": 0.603080928
+                },
+                {
+                    "vector_id": "c15e08c8278bcbacc654e450499c42540b3a4a2dcc51769bd07143df759808a8",
+                    "score": 0.592595339
+                },
+                {
+                    "vector_id": "3d05fbf1c5e972f1bf293eb66302a0c36068b04192c217098ae093486e4fa92c",
+                    "score": 0.574195504
+                },
+                {
+                    "vector_id": "9d3fb4feaa3a7f52613731dfcc0fddf0a14f28af59cadad86e8db6f21cfff568",
+                    "score": 0.504658937
+                }
+            ],
+            "source_verification": true,
+            "passed": true
+        },
+        {
+            "test_name": "Positional Encoding",
+            "question": "Since the Transformer has no recurrence or convolution, how does it make use of the order of the sequence?",
+            "standalone_question": "Since the Transformer has no recurrence or convolution, how does it make use of the order of the sequence?",
+            "answer": "Since the Transformer model contains no recurrence and no convolution, it injects information about the relative or absolute position of the tokens in the sequence by adding \"positional encodings\" to the input embeddings [Source 1].",
+            "expected_answerable": true,
+            "is_refusal": false,
+            "best_similarity_score": 0.471251488,
+            "retrieved_chunks": 6,
+            "accepted_chunks": 6,
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "1",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "retrieval_scores": [
+                {
+                    "vector_id": "150c2448e32c88235170d2cfd6c988d03da9c04263a9433e8d260a8f860ddf7f",
+                    "score": 0.471251488
+                },
+                {
+                    "vector_id": "d2a2309fa14c9b160b771f6fc6e4a747e1f0aba3cc17f8307e8d6587f63471fc",
+                    "score": 0.470280826
+                },
+                {
+                    "vector_id": "590f56de8f1c18ea885a893deddd77e8e3608862db73daa6702e79ef723670af",
+                    "score": 0.449426949
+                },
+                {
+                    "vector_id": "3cbe8484c08768c8f6b16b5ee28c266c7c34fda2280af18dbeeffc28bc26c9c3",
+                    "score": 0.431420982
+                },
+                {
+                    "vector_id": "b50429afa5e4819892abdd64f2367e7519273e6ea17b1dc94503310f39bd785b",
+                    "score": 0.431037545
+                },
+                {
+                    "vector_id": "986390fa0e4215721fde8ecf450e5c9b4a45b41e6379fe1cf6b7becaa5b03167",
+                    "score": 0.409723103
+                }
+            ],
+            "source_verification": true,
+            "passed": true
+        },
+        {
+            "test_name": "Unrelated Question Rejection",
+            "question": "How does photosynthesis work in plants?",
+            "standalone_question": "How does photosynthesis work in plants?",
+            "answer": "I don't know based on the provided document.",
+            "expected_answerable": false,
+            "is_refusal": true,
+            "best_similarity_score": 0.174570799,
+            "retrieved_chunks": 6,
+            "accepted_chunks": 0,
+            "sources": [],
+            "retrieval_scores": [],
+            "source_verification": false,
+            "passed": true
+        },
+        {
+            "test_name": "Conversational Follow-up",
+            "question": "Why is that necessary?",
+            "standalone_question": "Why is it necessary for the Transformer model to use positional encodings to inject information about the position of tokens in the sequence?",
+            "answer": "It is necessary for the Transformer model to use positional encodings because the model contains no recurrence and no convolution [Source 2]. Consequently, without this injection, the model would not have information about the relative or absolute position of the tokens in the sequence, which is required for the model to make use of the order of the sequence [Source 2].",
+            "expected_answerable": true,
+            "is_refusal": false,
+            "best_similarity_score": 0.563365817,
+            "retrieved_chunks": 6,
+            "accepted_chunks": 6,
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "9",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "8",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "retrieval_scores": [
+                {
+                    "vector_id": "82f7cde3c3d24983d27551728c37d8e13a01789d5077bf8efe5c27bcb564fc9e",
+                    "score": 0.563365817
+                },
+                {
+                    "vector_id": "150c2448e32c88235170d2cfd6c988d03da9c04263a9433e8d260a8f860ddf7f",
+                    "score": 0.549172163
+                },
+                {
+                    "vector_id": "620ad196075b46f22bdb38b72af38199753c14c697c84425aeb53d3766c20f5b",
+                    "score": 0.534702301
+                },
+                {
+                    "vector_id": "9fa70977e466b930a27f59b10d592f3c37ed2581cdaada0b64426eb60c601ca6",
+                    "score": 0.523709297
+                },
+                {
+                    "vector_id": "590f56de8f1c18ea885a893deddd77e8e3608862db73daa6702e79ef723670af",
+                    "score": 0.521181703
+                },
+                {
+                    "vector_id": "d2a2309fa14c9b160b771f6fc6e4a747e1f0aba3cc17f8307e8d6587f63471fc",
+                    "score": 0.516836882
+                }
+            ],
+            "source_verification": true,
+            "passed": true
+        }
+    ]
+}

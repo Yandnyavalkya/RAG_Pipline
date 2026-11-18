@@ -1,0 +1,259 @@
+{
+    "total_questions": 5,
+    "average_faithfulness": 5.0,
+    "average_relevance": 5.0,
+    "passed_questions": 5,
+    "failed_questions": 0,
+    "results": [
+        {
+            "question_id": 1,
+            "question": "What is the Transformer architecture?",
+            "answer": "The Transformer is a transduction model that relies entirely on self-attention to compute representations of its input and output, without using sequence-aligned RNNs or convolution [Source 5]. Its overall architecture consists of stacked self-attention and point-wise, fully connected layers for both the encoder and decoder [Source 1].\n\nSpecifically, the encoder is composed of a stack of N = 6 identical layers [Source 1]. Each encoder layer contains two sub-layers: a multi-head self-attention mechanism and a simple, position-wise fully connected feed-forward network (though the specific details of the second sub-layer are cut off in the provided text, the first is identified) [Source 1]. The model allows for significantly more parallelization compared to other architectures [Source 6].",
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "1",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "8",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "evaluation": {
+                "faithfulness_score": 5.0,
+                "relevance_score": 5.0,
+                "faithfulness_reason": "The generated answer is fully supported by the provided document context. It accurately cites Source 5 for the definition of the Transformer as a transduction model relying on self-attention without RNNs or convolution. It correctly cites Source 1 for the architecture details (stacked self-attention, encoder stack of N=6, multi-head self-attention sub-layer). It also correctly cites Source 6 for the parallelization advantage. There are no hallucinations or unsupported claims.",
+                "relevance_reason": "The answer directly addresses the question 'What is the Transformer architecture?' by defining it and describing its key structural components. It covers the core points of the expected answer (based on attention/self-attention, no recurrence/convolution) and adds specific architectural details found in the context (encoder/decoder structure), making it a comprehensive and relevant response.",
+                "passed": true
+            }
+        },
+        {
+            "question_id": 2,
+            "question": "What is the purpose of multi-head attention?",
+            "answer": "The primary purpose of multi-head attention is to allow the model to jointly attend to information from different representation subspaces at different positions [Source 3]. This mechanism counteracts the reduced effective resolution that occurs when attention-weighted positions are averaged, an issue that arises when reducing operations to a constant number [Source 1]. Additionally, using a single attention head inhibits the ability to attend to these different subspaces simultaneously [Source 3]. The document also notes that individual attention heads learn to perform different tasks, often exhibiting behavior related to the syntactic and semantic structure of sentences [Source 6] [Source 2].",
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "15",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "14",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "7",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "evaluation": {
+                "faithfulness_score": 5.0,
+                "relevance_score": 5.0,
+                "faithfulness_reason": "The generated answer is fully supported by the provided document context. It accurately cites Source 3 for the core definition, Source 1 for the counteraction of reduced resolution, and Sources 2 and 6 for the behavior of individual heads. No unsupported claims or invented facts are present.",
+                "relevance_reason": "The answer directly addresses the question by stating the primary purpose as defined in the expected answer. It also provides relevant supporting context from the documents, such as the limitation of single-head attention and the specific behaviors of different heads, which enhances the completeness of the response.",
+                "passed": true
+            }
+        },
+        {
+            "question_id": 3,
+            "question": "Why does the Transformer use positional encoding?",
+            "answer": "The Transformer uses positional encoding because its architecture computes hidden representations in parallel for all input and output positions, which means it lacks the inherent sequential processing of recurrent or convolutional models where the number of operations to relate distant positions grows with distance [Source 2]. Since the self-attention mechanism does not naturally account for the order of tokens, positional encodings are added to the bottoms of the encoder and decoder stacks to provide the model with information about the position of each token in the sequence [Source 3]. These encodings have the same dimension as the embeddings, allowing them to be summed together [Source 3].",
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "8",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "1",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "9",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "evaluation": {
+                "faithfulness_score": 5.0,
+                "relevance_score": 5.0,
+                "faithfulness_reason": "The generated answer is fully supported by the document context. It correctly cites Source 2 regarding the parallel computation and lack of inherent sequential processing compared to RNNs/ConvNets, and Source 3 regarding the addition of positional encodings to the encoder/decoder stacks to provide position information. No unsupported facts are introduced.",
+                "relevance_reason": "The answer correctly addresses the user's question by explaining that positional encoding is necessary because the Transformer processes inputs in parallel and lacks the inherent order information provided by recurrence or convolution. It covers the key points of the expected answer effectively.",
+                "passed": true
+            }
+        },
+        {
+            "question_id": 4,
+            "question": "What is the difference between the encoder and decoder?",
+            "answer": "Based on the provided document context, the primary differences between the encoder and decoder are as follows:\n\n1.  **Sub-layers:** The encoder layers contain two sub-layers: a multi-head self-attention mechanism and a simple, position-wise fully connected feed-forward network [Source 4]. In contrast, the decoder inserts a third sub-layer that performs multi-head attention over the output of the encoder stack, in addition to the two sub-layers found in the encoder [Source 2].\n2.  **Attention Mechanism:**\n    *   **Encoder:** The self-attention layers allow each position in the encoder to attend to all positions in the previous layer of the encoder [Source 3], [Source 5].\n    *   **Decoder:** The self-attention sub-layer is modified to prevent positions from attending to subsequent positions (i.e., it is masked to preserve the auto-regressive property) [Source 2], [Source 5]. Additionally, the decoder includes \"encoder-decoder attention\" layers where queries come from the previous decoder layer, and keys and values come from the output of the encoder, allowing every decoder position to attend to all input positions [Source 3].\n3.  **Architecture Identity:** Both the encoder and decoder are composed of a stack of $N = 6$ identical layers [Source 2], [Source 4].\n\n[Source 2], [Source 3], [Source 4], [Source 5]",
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "3",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "5",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "8",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "evaluation": {
+                "faithfulness_score": 5.0,
+                "relevance_score": 5.0,
+                "faithfulness_reason": "The generated answer is fully supported by the provided document context. It correctly identifies the structural differences (2 vs 3 sub-layers), the specific attention mechanisms (standard self-attention in encoder vs masked self-attention and encoder-decoder attention in decoder), and cites the correct sources for each claim. There are no hallucinations or unsupported facts.",
+                "relevance_reason": "The answer directly addresses the user's question about the differences between the encoder and decoder. It covers all key points mentioned in the expected answer (processing input vs generating output, masked self-attention, attention over encoder outputs) and provides additional accurate detail from the context.",
+                "passed": true
+            }
+        },
+        {
+            "question_id": 5,
+            "question": "What is the computational complexity of self-attention?",
+            "answer": "The computational complexity per layer for self-attention is **O(n² · d)**, where *n* is the sequence length and *d* is the representation dimension [Source 6].\n\nAdditionally, the text notes that self-attention layers are faster than recurrent layers in terms of computational complexity when the sequence length *n* is smaller than the representation dimensionality *d* [Source 4][Source 5].",
+            "sources": [
+                {
+                    "source_id": 1,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "2",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 2,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 3,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "7",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 4,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 5,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "7",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                },
+                {
+                    "source_id": 6,
+                    "document": "Attention_all_you_need.pdf",
+                    "page": "6",
+                    "path": "C:\\Users\\dell\\Documents\\Naresh_IT\\Full Stack Data Science With Gen AI\\Gen_AI\\RAG_Pipeline_Project\\RAG_Pipeline\\data\\raw\\Attention_all_you_need.pdf"
+                }
+            ],
+            "evaluation": {
+                "faithfulness_score": 5.0,
+                "relevance_score": 5.0,
+                "faithfulness_reason": "The generated answer accurately cites the complexity O(n² · d) from Table 1 in Source 6 and correctly attributes the comparison with recurrent layers to Sources 4 and 5. All claims are directly supported by the provided document context.",
+                "relevance_reason": "The answer correctly identifies the computational complexity as quadratic with respect to sequence length (O(n²)), which matches the expected answer. It provides the specific formula and context, fully addressing the user's question.",
+                "passed": true
+            }
+        }
+    ]
+}
