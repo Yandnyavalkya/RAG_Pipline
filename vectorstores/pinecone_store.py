@@ -98,10 +98,14 @@ class PineconeVectorStore:
             for document, embedding in zip(
                 batch_chunks, batch_embeddings
             ):
+                vector_id = self._create_vector_id(document)
+                metadata = self._prepare_metadata(document)
+                metadata["chunk_id"] = vector_id
+
                 vectors.append({
-                    "id": self._create_vector_id(document),
+                    "id": vector_id,
                     "values": embedding,
-                    "metadata": self._prepare_metadata(document),
+                    "metadata": metadata,
                 })
 
             self.index.upsert(
@@ -118,13 +122,23 @@ class PineconeVectorStore:
         print("\nPinecone ingestion completed!")
         return total_uploaded
 
-    def similarity_search(self, query_embedding, top_k=4):
+    def similarity_search(
+        self,
+        query_embedding,
+        top_k=4,
+        metadata_filter=None,
+    ):
 
-        response = self.index.query(
-            vector=query_embedding,
-            top_k=top_k,
-            namespace=self.namespace,
-            include_metadata=True,
-        )
+        query_kwargs = {
+            "vector": query_embedding,
+            "top_k": top_k,
+            "namespace": self.namespace,
+            "include_metadata": True,
+        }
+
+        if metadata_filter:
+            query_kwargs["filter"] = metadata_filter
+
+        response = self.index.query(**query_kwargs)
 
         return response.matches

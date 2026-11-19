@@ -11,10 +11,13 @@ The application loads PDF, TXT, and CSV documents, splits them into smaller chun
 - **Embeddings:** Uses Sentence Transformers (`all-MiniLM-L6-v2`).
 - **Vector Database:** Stores and retrieves embeddings using Pinecone.
 - **Semantic Search:** Retrieves relevant document chunks using cosine similarity.
-- **Similarity Filtering:** Rejects irrelevant queries using a configurable similarity threshold.
+- **Question Classification:** Routes document-summary, specific, and unrelated questions differently.
+- **Similarity Filtering:** Rejects irrelevant specific questions using a calibrated similarity threshold. The threshold is not lowered for summary questions.
+- **Relevance Validation:** Applies a server-side evidence check before generation.
+- **Confidence Assessment:** Returns a calibrated confidence score from retrieval quality, coverage, citations, and grounding. Raw cosine similarity is not shown as a probability.
 - **LLM Integration:** Uses the official Groq Python SDK.
 - **Conversational Memory:** Supports contextual follow-up questions with recent conversation history.
-- **Source Attribution:** Displays supporting document names and page numbers.
+- **Source Attribution:** Returns filename, page, chunk id, excerpt, and citation flags.
 - **RAG Evaluation:** Evaluates answer faithfulness and relevance.
 - **Chunking Experiments:** Compares different chunk sizes and overlaps using separate Pinecone namespaces.
 
@@ -214,6 +217,20 @@ The application supports:
 
 Ask questions related to your uploaded documents.
 
+Examples:
+
+- `What is the document about?` uses representative chunks and returns a grounded overview.
+- `What is attention?` uses normal semantic retrieval.
+- `How does photosynthesis work?` is rejected when the uploaded documents do not cover it.
+
+Run the Phase 1 intelligence unit tests:
+
+```bash
+python test_intelligence.py
+```
+
+After changing ingestion metadata, re-run `python ingest.py` so Pinecone vectors include `document_id`, `document_name`, and `chunk_id`.
+
 ## Configuration
 
 The main settings are controlled through `.env`.
@@ -275,12 +292,12 @@ Evaluation reports are stored in `reports/`.
 
 ## Future Improvements
 
-- Web-based user interface.
-- Multi-user conversation management.
-- Additional document formats.
-- Reranking retrieved chunks.
-- Improved retrieval evaluation.
-- Deployment as an API service.
+See `docs/architecture.md` for the confirmed product direction:
+
+- Multiple documents per user, with retrieval scoped by `document_id`.
+- FastAPI backend with MongoDB, JWT, and document isolation.
+- React + TypeScript dashboard, PDF viewer, and source highlighting.
+- Suggested questions, feedback review, and production deployment.
 
 ## License
 

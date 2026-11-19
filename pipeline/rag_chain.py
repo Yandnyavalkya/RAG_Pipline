@@ -1,4 +1,3 @@
-
 from config import TOP_K, SIMILARITY_THRESHOLD
 
 from retrievers.retriever import PineconeRetriever
@@ -6,10 +5,26 @@ from llms.groq_llm import GroqLLM
 
 from prompts.rag_prompt import (
     SYSTEM_PROMPT,
+    SUMMARY_SYSTEM_PROMPT,
     CONTEXTUALIZE_SYSTEM_PROMPT,
     build_user_prompt,
+    build_summary_prompt,
     build_contextualization_prompt,
 )
+
+from rag.constants import (
+    QUESTION_TYPE_SUMMARY,
+    REFUSAL_MESSAGE,
+)
+from rag.question_classifier import classify_question
+from rag.retrieval import RetrievalOrchestrator
+from rag.relevance_checker import validate_relevance
+from rag.source_validator import (
+    build_sources,
+    mark_cited_sources,
+    grounding_score,
+)
+from rag.confidence import assess_confidence
 
 
 class RAGPipeline:
@@ -28,6 +43,10 @@ class RAGPipeline:
             )
 
         self.retriever = PineconeRetriever(top_k=top_k)
+        self.retrieval = RetrievalOrchestrator(
+            retriever=self.retriever,
+            top_k=top_k,
+        )
         self.llm = GroqLLM()
         self.similarity_threshold = similarity_threshold
 
@@ -41,23 +60,17 @@ class RAGPipeline:
     def build_context(documents):
 
         context_parts = []
-        sources = []
 
         for index, document in enumerate(documents, start=1):
-
             metadata = document.metadata
-
-            source_path = metadata.get(
-                "source", "Unknown source"
+            source_name = metadata.get("document_name") or (
+                str(metadata.get("source", "Unknown source"))
+                .replace("\\", "/")
+                .split("/")[-1]
             )
-
             page = metadata.get(
                 "page_label",
                 metadata.get("page", "Unknown"),
-            )
-
-            source_name = (
-                source_path.replace("\\", "/").split("/")[-1]
             )
 
             context_parts.append(
@@ -71,14 +84,7 @@ Content:
 """
             )
 
-            sources.append({
-                "source_id": index,
-                "document": source_name,
-                "page": page,
-                "path": source_path,
-            })
-
-        return "\n\n".join(context_parts), sources
+        return "\n\n".join(context_parts)
 
     def contextualize_question(self, question, chat_history):
 
@@ -105,7 +111,44 @@ Content:
 
         return standalone_question or question
 
-    def ask(self, question, chat_history=None):
+    def _refusal_result(
+        self,
+        question_type,
+        standalone_question,
+        retrieval_results,
+        reason,
+    ):
+
+        best_score = (
+            retrieval_results[0]["score"]
+            if retrieval_results
+            else None
+        )
+
+        return {
+            "status": "rejected",
+            "answer": REFUSAL_MESSAGE,
+            "question_type": question_type,
+            "confidence": assess_confidence(
+                question_type=question_type,
+                accepted_results=[],
+                citation_report={},
+                grounding=0.0,
+                refused=True,
+                threshold=self.similarity_threshold,
+            ),
+            "sources": [],
+            "related_questions": [],
+            "standalone_question": standalone_question,
+            "best_similarity_score": best_score,
+            "retrieved_chunks": len(retrieval_results),
+            "accepted_chunks": 0,
+            "retrieval_scores": [],
+            "relevance_reason": reason,
+            "context": "",
+        }
+
+    def ask(self, question, chat_history=None, document_ids=None):
 
         if not question or not question.strip():
             raise ValueError("Question cannot be empty.")
@@ -125,65 +168,47 @@ Content:
                 standalone_question,
             )
 
+        question_type = classify_question(standalone_question)
+        print(f"Question type: {question_type}")
+
         print("\nRetrieving relevant document chunks...")
 
-        # Retrieve documents along with their similarity scores
-        retrieval_results = self.retriever.retrieve_with_scores(
-            standalone_question
+        retrieval_results = self.retrieval.retrieve(
+            question=standalone_question,
+            question_type=question_type,
+            document_ids=document_ids,
         )
 
-        # Filter chunks using the configured threshold
-        filtered_results = [
-            result
-            for result in retrieval_results
-            if (
-                result["score"] is not None
-                and result["score"] >= self.similarity_threshold
-            )
-        ]
-
-        print(
-            f"Retrieved chunks: {len(retrieval_results)}"
+        relevance = validate_relevance(
+            question=standalone_question,
+            question_type=question_type,
+            retrieval_results=retrieval_results,
+            threshold=self.similarity_threshold,
         )
 
-        print(
-            f"Chunks passing threshold: {len(filtered_results)}"
-        )
+        filtered_results = relevance["accepted"]
 
-        # Reject if no chunks are sufficiently relevant
-        if not filtered_results:
+        print(f"Retrieved chunks: {len(retrieval_results)}")
+        print(f"Chunks passing validation: {len(filtered_results)}")
+        print(f"Relevance: {relevance['reason']}")
 
-            best_score = (
-                retrieval_results[0]["score"]
-                if retrieval_results
-                else None
+        if not relevance["is_relevant"]:
+            print("No relevant document evidence found.")
+            return self._refusal_result(
+                question_type=question_type,
+                standalone_question=standalone_question,
+                retrieval_results=retrieval_results,
+                reason=relevance["reason"],
             )
-
-            print(
-                "No relevant document chunks found."
-            )
-
-            return {
-                "answer": (
-                    "I don't know based on the provided document."
-                ),
-                "sources": [],
-                "standalone_question": standalone_question,
-                "best_similarity_score": best_score,
-                "retrieved_chunks": len(retrieval_results),
-                "accepted_chunks": 0,
-                "retrieval_scores": [],
-                "context": "",
-            }
 
         documents = [
             result["document"]
             for result in filtered_results
         ]
 
-        context, sources = self.build_context(documents)
+        context = self.build_context(documents)
+        sources = build_sources(filtered_results)
 
-        # Include retrieval scores for evaluation and inspection
         retrieval_scores = [
             {
                 "vector_id": result["id"],
@@ -192,25 +217,52 @@ Content:
             for result in filtered_results
         ]
 
-        user_prompt = build_user_prompt(
-            question=standalone_question,
-            context=context,
-        )
+        if question_type == QUESTION_TYPE_SUMMARY:
+            system_prompt = SUMMARY_SYSTEM_PROMPT
+            user_prompt = build_summary_prompt(
+                question=standalone_question,
+                context=context,
+            )
+        else:
+            system_prompt = SYSTEM_PROMPT
+            user_prompt = build_user_prompt(
+                question=standalone_question,
+                context=context,
+            )
 
         print("\nGenerating answer using Groq...")
 
         answer = self.llm.generate(
-            system_prompt=SYSTEM_PROMPT,
+            system_prompt=system_prompt,
             user_prompt=user_prompt,
         )
 
+        refused = answer.strip() == REFUSAL_MESSAGE
+        citation_report = mark_cited_sources(sources, answer)
+        grounding = grounding_score(answer, context, REFUSAL_MESSAGE)
+        confidence = assess_confidence(
+            question_type=question_type,
+            accepted_results=filtered_results,
+            citation_report=citation_report,
+            grounding=grounding,
+            refused=refused,
+            threshold=self.similarity_threshold,
+        )
+
         return {
+            "status": "rejected" if refused else "success",
             "answer": answer,
+            "question_type": question_type,
+            "confidence": confidence,
             "sources": sources,
+            "related_questions": [],
             "standalone_question": standalone_question,
-            "best_similarity_score": retrieval_results[0]["score"],
+            "best_similarity_score": retrieval_results[0]["score"]
+            if retrieval_results else None,
             "retrieved_chunks": len(retrieval_results),
             "accepted_chunks": len(filtered_results),
             "retrieval_scores": retrieval_scores,
+            "relevance_reason": relevance["reason"],
+            "citation_report": citation_report,
             "context": context,
         }

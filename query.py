@@ -1,6 +1,23 @@
-
 from pipeline.rag_chain import RAGPipeline
 from memory.conversation_memory import ConversationMemory
+
+
+def display_confidence(confidence):
+
+    print("\n========== CONFIDENCE ==========")
+
+    if not confidence:
+        print("Confidence unavailable.")
+        return
+
+    print("Level:", confidence.get("level"))
+    print("Calibrated score:", confidence.get("score"))
+
+    signals = confidence.get("signals") or {}
+    if signals:
+        print("Signals:")
+        for name, value in signals.items():
+            print(f"  {name}: {value}")
 
 
 def display_sources(sources):
@@ -13,9 +30,12 @@ def display_sources(sources):
 
     for source in sources:
 
-        print(f"\n[Source {source['source_id']}]")
-        print("Document:", source["document"])
-        print("Page:", source["page"])
+        cited = "cited" if source.get("cited") else "retrieved"
+        print(f"\n[Source {source['source_id']}: {source['document']}, Page {source['page']}]")
+        print("Chunk ID:", source.get("chunk_id"))
+        print("Status:", cited)
+        if source.get("excerpt"):
+            print("Excerpt:", source["excerpt"])
 
 
 def main():
@@ -64,11 +84,13 @@ def main():
             )
 
             print("\n========== ANSWER ==========")
+            print("Status:", result.get("status"))
+            print("Question type:", result.get("question_type"))
             print(result["answer"])
 
+            display_confidence(result.get("confidence"))
             display_sources(result["sources"])
 
-            # Save the completed conversation turn
             memory.add_turn(
                 question=question,
                 answer=result["answer"],

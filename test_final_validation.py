@@ -5,13 +5,14 @@ from pathlib import Path
 
 from pipeline.rag_chain import RAGPipeline
 from config import TOP_K, SIMILARITY_THRESHOLD
+from rag.constants import REFUSAL_MESSAGE
 
 
 BASE_DIR = Path(__file__).resolve().parent
 REPORT_DIR = BASE_DIR / "reports"
 REPORT_FILE = REPORT_DIR / "final_validation_report.json"
 
-REFUSAL = "I don't know based on the provided document."
+REFUSAL = REFUSAL_MESSAGE
 
 
 def run_test(pipeline, test_name, question, chat_history=None,
@@ -108,6 +109,18 @@ def main():
     pipeline = RAGPipeline()
 
     results = []
+
+    # -------------------------------------------------
+    # TEST 0: Document-level summary
+    # -------------------------------------------------
+
+    test0 = run_test(
+        pipeline,
+        test_name="Document Summary Question",
+        question="What is the document about?",
+        expect_answerable=True,
+    )
+    results.append(test0)
 
     # -------------------------------------------------
     # TEST 1: Transformer architecture

@@ -17,7 +17,12 @@ class PineconeRetriever:
             namespace=namespace
         )
 
-    def retrieve_with_scores(self, question):
+    def retrieve_with_scores(
+        self,
+        question,
+        metadata_filter=None,
+        top_k=None,
+    ):
 
         if not question or not question.strip():
             raise ValueError("Question cannot be empty.")
@@ -28,7 +33,8 @@ class PineconeRetriever:
 
         matches = self.vector_store.similarity_search(
             query_embedding=query_embedding,
-            top_k=self.top_k,
+            top_k=top_k or self.top_k,
+            metadata_filter=metadata_filter,
         )
 
         results = []

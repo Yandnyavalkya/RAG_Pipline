@@ -5,6 +5,7 @@ from loaders.document_loader import load_documents
 from splitters.text_splitter import split_documents
 from embeddings.sentence_transformer import SentenceTransformerEmbedding
 from vectorstores.pinecone_store import PineconeVectorStore
+from rag.document_metadata import attach_document_metadata
 
 
 def main():
@@ -22,6 +23,7 @@ def main():
     print("\n2. Splitting documents...")
 
     chunks = split_documents(documents)
+    chunks = attach_document_metadata(chunks)
 
     print("Chunks created:", len(chunks))
 
