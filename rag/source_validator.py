@@ -23,10 +23,14 @@ def build_sources(filtered_results):
         document = result["document"]
         metadata = document.metadata
         source_path = metadata.get("source", "Unknown source")
-        page = metadata.get(
-            "page_label",
-            metadata.get("page", "Unknown"),
-        )
+        if metadata.get("page_label") is not None:
+            page = metadata["page_label"]
+        else:
+            # PDF loaders expose a zero-based page index; citations shown to
+            # users must match the printed, one-based PDF page number.
+            page = metadata.get("page", "Unknown")
+            if isinstance(page, int):
+                page += 1
 
         try:
             page_number = int(page)

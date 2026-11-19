@@ -142,3 +142,22 @@ class PineconeVectorStore:
         response = self.index.query(**query_kwargs)
 
         return response.matches
+
+    def delete_by_document_id(self, document_id, user_id=None):
+        if not document_id:
+            raise ValueError("document_id is required to delete vectors.")
+
+        metadata_filter = {"document_id": {"$eq": document_id}}
+
+        if user_id:
+            metadata_filter = {
+                "$and": [
+                    {"document_id": {"$eq": document_id}},
+                    {"user_id": {"$eq": user_id}},
+                ]
+            }
+
+        self.index.delete(
+            filter=metadata_filter,
+            namespace=self.namespace,
+        )

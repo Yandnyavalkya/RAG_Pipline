@@ -68,10 +68,12 @@ class RAGPipeline:
                 .replace("\\", "/")
                 .split("/")[-1]
             )
-            page = metadata.get(
-                "page_label",
-                metadata.get("page", "Unknown"),
-            )
+            if metadata.get("page_label") is not None:
+                page = metadata["page_label"]
+            else:
+                page = metadata.get("page", "Unknown")
+                if isinstance(page, int):
+                    page += 1
 
             context_parts.append(
                 f"""
@@ -148,7 +150,13 @@ Content:
             "context": "",
         }
 
-    def ask(self, question, chat_history=None, document_ids=None):
+    def ask(
+        self,
+        question,
+        chat_history=None,
+        document_ids=None,
+        user_id=None,
+    ):
 
         if not question or not question.strip():
             raise ValueError("Question cannot be empty.")
@@ -177,6 +185,7 @@ Content:
             question=standalone_question,
             question_type=question_type,
             document_ids=document_ids,
+            user_id=user_id,
         )
 
         relevance = validate_relevance(

@@ -1,19 +1,25 @@
 from rag.constants import QUESTION_TYPE_SUMMARY, SUMMARY_PROBES
 
 
-def build_metadata_filter(document_ids):
-    if not document_ids:
-        return None
+def build_metadata_filter(document_ids=None, user_id=None):
+    clauses = []
 
-    unique_ids = [value for value in document_ids if value]
-
-    if not unique_ids:
-        return None
-
+    unique_ids = [value for value in (document_ids or []) if value]
     if len(unique_ids) == 1:
-        return {"document_id": {"$eq": unique_ids[0]}}
+        clauses.append({"document_id": {"$eq": unique_ids[0]}})
+    elif unique_ids:
+        clauses.append({"document_id": {"$in": unique_ids}})
 
-    return {"document_id": {"$in": unique_ids}}
+    if user_id:
+        clauses.append({"user_id": {"$eq": user_id}})
+
+    if not clauses:
+        return None
+
+    if len(clauses) == 1:
+        return clauses[0]
+
+    return {"$and": clauses}
 
 
 def _page_sort_key(page_value):
@@ -74,8 +80,17 @@ class RetrievalOrchestrator:
         self.retriever = retriever
         self.top_k = top_k
 
-    def retrieve(self, question, question_type, document_ids=None):
-        metadata_filter = build_metadata_filter(document_ids)
+    def retrieve(
+        self,
+        question,
+        question_type,
+        document_ids=None,
+        user_id=None,
+    ):
+        metadata_filter = build_metadata_filter(
+            document_ids=document_ids,
+            user_id=user_id,
+        )
 
         if question_type == QUESTION_TYPE_SUMMARY:
             return self._retrieve_representative(

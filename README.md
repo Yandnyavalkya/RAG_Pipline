@@ -1,5 +1,46 @@
 # Modular Retrieval-Augmented Generation (RAG) Pipeline
 
+## Document intelligence web application
+
+This repository also contains a multi-user web application built on the RAG pipeline. It provides JWT accounts, private PDF upload and processing, document-scoped chat, evidence confidence, page citations, related question suggestions, conversation history, and answer feedback. The backend is under `backend/`; the React + TypeScript client is under `frontend/`. See [the layered architecture](docs/architecture.md).
+
+### Run the web application locally
+
+1. Configure `.env` using `.env.example`. Set Groq and Pinecone credentials, a running MongoDB URI, and a long random `JWT_SECRET`.
+2. Install the Python dependencies and run the API from the repository root:
+
+   ```powershell
+   python -m pip install -r requirements.txt
+   uvicorn backend.app.main:app --reload
+   ```
+
+3. In another terminal, configure the frontend and start Vite:
+
+   ```powershell
+   cd frontend
+   Copy-Item .env.example .env
+   npm install
+   npm run dev
+   ```
+
+4. Open `http://localhost:5173`, create an account, upload a PDF, and wait for processing to finish before asking questions. API documentation is available at `http://localhost:8000/docs`.
+
+Uploads are limited to PDFs and the default maximum size is 20 MB. Configure `MAX_UPLOAD_SIZE_MB`, `UPLOAD_DIR`, `MONGODB_URI`, `MONGODB_DATABASE`, and `FRONTEND_ORIGINS` for your environment. Do not commit credentials or uploaded files.
+
+### Feedback inbox
+
+Users can open **My feedback** from the floating button in the frontend to see their own submissions. To review submissions from all users, set `ADMIN_EMAILS` to the comma-separated email addresses of reviewer accounts in `.env`, then sign in with one of those accounts and open **Review feedback**. Reviewers can mark entries reviewed or resolved. Feedback is stored in MongoDB in the `feedback` collection in the configured database.
+
+### Run the complete application with Docker
+
+Install Docker Desktop, copy `.env.example` to `.env` if you do not already have a local `.env`, then fill in the Groq and Pinecone keys, model name, a strong `JWT_SECRET`, and `ADMIN_EMAILS`. Start the app from the repository root:
+
+```powershell
+docker compose up --build
+```
+
+Open the frontend at `http://localhost:8080`. The API is also available at `http://localhost:8000/docs`. Compose starts MongoDB and keeps MongoDB data, uploaded PDFs, and the downloaded embedding model in named volumes. To stop the containers while keeping data, press Ctrl+C and run `docker compose down`. To remove stored MongoDB data and PDFs as well, run `docker compose down -v`.
+
 A modular Retrieval-Augmented Generation (RAG) application built using Python, LangChain document processing components, Sentence Transformers, Pinecone, and the Groq API.
 
 The application loads PDF, TXT, and CSV documents, splits them into smaller chunks, generates vector embeddings, stores them in Pinecone, and retrieves relevant information to answer user questions using a Groq-powered Large Language Model.

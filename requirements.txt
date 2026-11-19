@@ -17,3 +17,16 @@ pinecone==10.3.0
 
 # Groq LLM
 groq==1.7.0
+
+# FastAPI backend
+fastapi==0.121.2
+uvicorn==0.38.0
+email-validator==2.3.0
+
+# Backend tests
+pytest==9.0.1
+httpx==0.28.1
+motor==3.7.1
+bcrypt==4.3.0
+PyJWT==2.10.1
+python-multipart==0.0.20
